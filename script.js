@@ -1,19 +1,10 @@
 const cardContainer = document.querySelector(".card-container");
+const dialog = document.querySelector("dialog");
+const newBookBtn = document.querySelector(".new-book-btn");
+const closeModalBtn = document.querySelector(".close-modal-btn");
+const bookForm = document.querySelector("#book-form");
 
-const myLibrary = [
-  {
-    title: "Feel Good Productivity",
-    author: "Ali Abdaal",
-    numPages: 266,
-    read: "not read"
-  },
-  {
-    title: "Die Tiermagierin - Schattentanz",
-    author: "Maxym M. Martineau",
-    numPages: 512,
-    read: "read"
-  }
-];
+const myLibrary = [];
 
 
 function Book(title, author, numPages, read) {
@@ -22,6 +13,37 @@ function Book(title, author, numPages, read) {
   this.numPages = numPages;
   this.read = read;
 }
+
+newBookBtn.addEventListener("click", function() {
+  dialog.show();
+});
+
+closeModalBtn.addEventListener("click", function(event) {
+  event.preventDefault();
+  dialog.close();
+})
+
+bookForm.addEventListener("submit", event => {
+  event.preventDefault();
+
+  const title = document.querySelector("#title");
+  const author = document.querySelector("#author");
+  const pages = document.querySelector("#pages");
+  const readingStatus = document.querySelector('input[name="reading-status"]:checked');
+  const defaultRadioButton = document.querySelector("#not-read");
+
+
+  addBookToLibrary(title.value, author.value, pages.value, readingStatus.value);
+
+  // reset to default
+  title.value = "";
+  author.value = "";
+  pages.value = "";
+  readingStatus.checked = false;
+  defaultRadioButton.checked = true;
+
+  dialog.close();
+});
 
 
 Book.prototype.info = function() {
@@ -38,18 +60,24 @@ Book.prototype.toggleReadStatus = function() {
 }
 
 
-function addBookToLibrary() {
-  const title = prompt("Book title: ");
-  const author = prompt("Book author: ");
-  const numPages = prompt("Number of pages: ");
-  const readStatus = prompt("Have you read it? ");
-
+function addBookToLibrary(title, author, numPages, readStatus) {
   const newBook = new Book(title, author, numPages, readStatus);
   myLibrary.push(newBook);
+  displayBooksInLibrary();
+}
+
+
+function resetDisplay() {
+  const cards = document.querySelectorAll(".card");
+  cards.forEach((card) => {
+    card.remove();
+  });
 }
 
 
 function displayBooksInLibrary() {
+  resetDisplay();
+
   for (const book of myLibrary) {
     const index = myLibrary.indexOf(book);
 
@@ -73,7 +101,6 @@ function displayBooksInLibrary() {
       const cardToDelete = document.querySelector(`[data-index="${index}"]`);
       cardToDelete.remove();
       myLibrary.splice(myLibrary.indexOf(book), 1);
-      console.log(myLibrary);
     });
 
 
