@@ -1,4 +1,19 @@
-const myLibrary = [];
+const cardContainer = document.querySelector(".card-container");
+
+const myLibrary = [
+  {
+    title: "Feel Good Productivity",
+    author: "Ali Abdaal",
+    numPages: 266,
+    read: "Not read yet"
+  },
+  {
+    title: "Die Tiermagierin - Schattentanz",
+    author: "Maxym M. Martineau",
+    numPages: 512,
+    read: "Already read"
+  }
+];
 
 function Book(title, author, numPages, read) {
   this.title = title;
@@ -22,6 +37,31 @@ function addBookToLibrary() {
   myLibrary.push(newBook);
   test();
 }
+
+function displayBooksInLibrary() {
+  for (const book of myLibrary) {
+    const card = document.createElement("div");
+    card.setAttribute("class", "card")
+    const titlePara = document.createElement("p");
+    const authorPara = document.createElement("p");
+    const pagesPara = document.createElement("p");
+    const readStatusPara = document.createElement("p");
+
+    titlePara.textContent = `Title: ${book.title}`;
+    authorPara.textContent = `Author: ${book.author}`;
+    pagesPara.textContent = `Number of Pages: ${book.numPages}`;
+    readStatusPara.textContent = `Reading status: ${book.read}`;
+    card.appendChild(titlePara);
+    card.appendChild(authorPara);
+    card.appendChild(pagesPara);
+    card.appendChild(readStatusPara);
+    cardContainer.appendChild(card)
+  }
+}
+
+displayBooksInLibrary();
+
+console.log(myLibrary);
 
 // Test data
 const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 196, "not read yet");
