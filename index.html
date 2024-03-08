@@ -16,7 +16,70 @@
 
         </div>
       </section>
-      <button>NEW BOOK</button>
+
+      <section class="modal-section">
+        <dialog>
+          <h2>Add a Book to the library</h2>
+          <form id="book-form">
+            <section>
+              <p>
+                <label for="title">Title: </label>
+                <input type="text" name="title" id="title" required>
+              </p>
+              <p>
+                <label for="author">Author: </label>
+                <input type="text" name="author" id="author" required>
+              </p>
+              <p>
+                <label for="pages">Number of Pages: </label>
+                <input type="tel" name="pages" id="pages" required>
+              </p>
+              <fieldset id="reading-status-field">
+                <legend>Reading status</legend>
+                <ul>
+                  <li>
+                    <input 
+                    type="radio" 
+                    name="reading-status" 
+                    id="not-read" 
+                    value="not-read"
+                    required
+                    checked
+                    >
+                    <label for="not-read">Not read</label>
+                  </li>
+                  <li>
+                    <input 
+                    type="radio" 
+                    name="reading-status" 
+                    id="reading" 
+                    value="reading"
+                    >
+                    <label for="reading">reading</label>
+                  </li>
+                  <li>
+                    <input 
+                    type="radio" 
+                    name="reading-status" 
+                    id="read" 
+                    value="read">
+                    <label for="read">read</label>
+                  </li>
+                </ul>
+              </fieldset>
+            </section>
+            <section>
+              <p>
+                <button class="add-book-btn btn">Add Book</button>
+              </p>
+              <p>
+                <button class="close-modal-btn btn" formmethod="dialog">Close</button>
+              </p>
+            </section>
+          </form>
+        </dialog>
+      </section>
+      <button class="new-book-btn btn">NEW BOOK</button>
     </main>
   </body>
 </html>
