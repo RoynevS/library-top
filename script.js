@@ -26,7 +26,10 @@ Book.prototype.toggleReadStatus = function() {
     this.read = "reading";
   } else if (this.read === "reading") {
     this.read = "read";
+  } else if (this.read === "read") {
+    this.read = "not read";
   }
+
   displayBooksInLibrary();
 }
 
@@ -128,9 +131,3 @@ function displayBooksInLibrary() {
 }
 
 displayBooksInLibrary();
-
-
-// Test data
-const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 196, "not read");
-
-console.log(theHobbit.info());
