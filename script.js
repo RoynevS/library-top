@@ -1,8 +1,9 @@
 const cardContainer = document.querySelector(".card-container");
-const dialog = document.querySelector("dialog");
+const addBookDialog = document.querySelector(".add-book-dialog");
 const newBookBtn = document.querySelector(".new-book-btn");
 const closeModalBtn = document.querySelector(".close-modal-btn");
 const bookForm = document.querySelector("#book-form");
+const changeForm = document.querySelector(".change-reading-status-form");
 
 const myLibrary = [];
 
@@ -14,13 +15,29 @@ function Book(title, author, numPages, read) {
   this.read = read;
 }
 
+
+Book.prototype.info = function() {
+  return `${this.title} by ${this.author}, ${this.numPages} pages, ${this.read}`;
+}
+
+
+Book.prototype.toggleReadStatus = function() {
+  if (this.read === "not read") {
+    this.read = "reading";
+  } else if (this.read === "reading") {
+    this.read = "read";
+  }
+  displayBooksInLibrary();
+}
+
+
 newBookBtn.addEventListener("click", function() {
-  dialog.show();
+  addBookDialog.show();
 });
 
 closeModalBtn.addEventListener("click", function(event) {
   event.preventDefault();
-  dialog.close();
+  addBookDialog.close();
 })
 
 bookForm.addEventListener("submit", event => {
@@ -42,25 +59,14 @@ bookForm.addEventListener("submit", event => {
   readingStatus.checked = false;
   defaultRadioButton.checked = true;
 
-  dialog.close();
+  addBookDialog.close();
 });
 
 
-Book.prototype.info = function() {
-  return `${this.title} by ${this.author}, ${this.numPages} pages, ${this.read}`;
-}
-
-
-Book.prototype.toggleReadStatus = function() {
-  if (this.read === "read") {
-    this.read = "not read";
-  } else if (this.read === "not read") {
-    this.read = "read";
-  }
-}
-
-
 function addBookToLibrary(title, author, numPages, readStatus) {
+  if (readStatus === "not-read") {
+    readStatus = readStatus.replace("-", " ");
+  }
   const newBook = new Book(title, author, numPages, readStatus);
   myLibrary.push(newBook);
   displayBooksInLibrary();
@@ -95,7 +101,7 @@ function displayBooksInLibrary() {
     const toggleReadStatusButton = document.createElement("button");
     toggleReadStatusButton.setAttribute("class", "toggle-read-btn btn");
 
-    toggleReadStatusButton.addEventListener("click", book.toggleReadStatus);
+    toggleReadStatusButton.addEventListener("click", book.toggleReadStatus.bind(book));
 
     deleteButton.addEventListener("click", function() {
       const cardToDelete = document.querySelector(`[data-index="${index}"]`);
@@ -126,6 +132,5 @@ displayBooksInLibrary();
 
 // Test data
 const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 196, "not read");
-theHobbit.toggleReadStatus();
 
 console.log(theHobbit.info());
