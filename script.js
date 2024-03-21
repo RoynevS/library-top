@@ -8,29 +8,29 @@ const changeForm = document.querySelector(".change-reading-status-form");
 const myLibrary = [];
 
 
-function Book(title, author, numPages, read) {
-  this.title = title;
-  this.author = author;
-  this.numPages = numPages;
-  this.read = read;
-}
-
-
-Book.prototype.info = function() {
-  return `${this.title} by ${this.author}, ${this.numPages} pages, ${this.read}`;
-}
-
-
-Book.prototype.toggleReadStatus = function() {
-  if (this.read === "not read") {
-    this.read = "reading";
-  } else if (this.read === "reading") {
-    this.read = "read";
-  } else if (this.read === "read") {
-    this.read = "not read";
+class Book {
+  constructor(title, author, numPages, read) {
+    this.title = title;
+    this.author = author;
+    this.numPages = numPages;
+    this.read = read;
   }
 
-  displayBooksInLibrary();
+  info() {
+    return `${this.title} by ${this.author}, ${this.numPages} pages, ${this.read}`;
+  }
+
+  toggleReadStatus() {
+    if (this.read === "not read") {
+      this.read = "reading";
+    } else if (this.read === "reading") {
+      this.read = "read";
+    } else if (this.read === "read") {
+      this.read = "not read";
+    }
+  
+    displayBooksInLibrary();
+  }
 }
 
 
